@@ -7,6 +7,17 @@ description: Safely removes or restores the shortcut arrow overlay on Windows 10
 
 Use this skill when the user wants to **remove** or **restore** the shortcut overlay arrow on Windows 10 or Windows 11 desktop and Explorer icons.
 
+## Repository Source
+
+If `scripts/` or `assets/blank.ico` are not already present in the current working directory (for example, if only `SKILL.md` was provided), clone or download the repository first:
+
+```powershell
+git clone https://github.com/MSNsoftware/Windows-Shortcut-Arrow-Tool-And-Skill.git
+cd Windows-Shortcut-Arrow-Tool-And-Skill
+```
+
+*(If `git` is unavailable, download the ZIP archive from `https://github.com/MSNsoftware/Windows-Shortcut-Arrow-Tool-And-Skill/archive/refs/heads/main.zip`, extract it, and run the scripts from the extracted folder.)*
+
 ## Why This Approach Works Safely
 
 1. **Multi-Resolution Transparent Icon (`assets/blank.ico`):**
@@ -19,11 +30,12 @@ Use this skill when the user wants to **remove** or **restore** the shortcut ove
 ## Instructions for AI Agents
 
 ### Remove Shortcut Arrows
-1. Run `scripts/Remove-ShortcutArrow.ps1` with PowerShell (elevated as Administrator for machine-wide `HKLM` + `C:\Windows\blank.ico`, or standard user for `HKCU` + `%LOCALAPPDATA%\ShortcutArrow\blank.ico`):
+1. Ensure you are in the repository root folder containing `scripts/` and `assets/blank.ico`.
+2. Run `scripts/Remove-ShortcutArrow.ps1` with PowerShell (elevated as Administrator for machine-wide `HKLM` + `C:\Windows\blank.ico`, or standard user for `HKCU` + `%LOCALAPPDATA%\ShortcutArrow\blank.ico`):
    ```powershell
    powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\Remove-ShortcutArrow.ps1"
    ```
-2. Verify that `Shell Icons` value `29` points directly to the `.ico` path **without** a `,0` suffix, and confirm `explorer.exe` restarted and `IconCache.db` / `thumbcache*.db` were cleared.
+3. Verify that `Shell Icons` value `29` points directly to the `.ico` path **without** a `,0` suffix, and confirm `explorer.exe` restarted and `IconCache.db` / `thumbcache*.db` were cleared.
 
 ### Restore Default Shortcut Arrows
 1. Run `scripts/Restore-ShortcutArrow.ps1` with PowerShell (elevated if `HKLM` was modified):
